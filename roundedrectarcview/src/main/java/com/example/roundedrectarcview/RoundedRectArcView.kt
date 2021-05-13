@@ -205,6 +205,15 @@ class RoundedRectArcView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+
+        fun create(activity : Activity) : RoundedRectArcView {
+            val view : RoundedRectArcView = RoundedRectArcView(activity)
+            activity.setContentView(view)
+            return view
+        }
+    }
 }
 
 
