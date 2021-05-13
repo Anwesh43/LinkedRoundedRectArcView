@@ -30,11 +30,29 @@ fun Float.maxScale(i : Int, n : Int) : Float = Math.max(0f, this - i * n.inverse
 fun Float.divideScale(i : Int, n : Int) : Float = Math.min(n.inverse(), maxScale(i, n)) * n
 fun Float.sinify() : Float = Math.sin(this * Math.PI).toFloat()
 
+fun Canvas.drawRoundedRectArc(scale : Float, w : Float, h : Float, paint : Paint) {
+    val size : Float = Math.min(w, h) / sizeFactor
+    val sf : Float = scale.sinify()
+    val sf2 : Float = sf.divideScale(1, parts)
+    save()
+    translate(w / 2, h / 2)
+    for (j in 0..1) {
+        val sfj : Float = sf.divideScale(j * 2, parts)
+        save()
+        scale(1f, 1f - 2 * j)
+        drawArc(RectF(-size, 0f, size, 2 * size), 0f, deg * sfj, true, paint)
+        restore()
+    }
+    drawRect(RectF(-size, size - 2 * size * sf2, size, size), paint)
+    restore()
+}
 
-
-
-
-
+fun Canvas.drawRRANode(i : Int, scale : Float, paint : Paint) {
+    val w : Float = width.toFloat()
+    val h : Float = height.toFloat()
+    paint.color = colors[i]
+    drawRoundedRectArc(scale, w, h, paint)
+}
 
 
 
