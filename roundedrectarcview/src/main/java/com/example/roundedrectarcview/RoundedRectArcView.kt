@@ -18,7 +18,7 @@ val colors : Array<Int> = arrayOf(
 ).map {
     Color.parseColor(it)
 }.toTypedArray()
-val parts : Int = 3
+val parts : Int = 4
 val scGap : Float = 0.02f / parts
 val sizeFactor : Float = 3.2f
 val delay : Long = 20
@@ -39,8 +39,8 @@ fun Canvas.drawRoundedRectArc(scale : Float, w : Float, h : Float, paint : Paint
     for (j in 0..1) {
         val sfj : Float = sf.divideScale(j * 2, parts)
         save()
-        scale(1f, 1f - 2 * j)
-        drawArc(RectF(-size, 0f, size, 2 * size), 0f, deg * sfj, true, paint)
+        translate(0f, size * (1f - 2 * j))
+        drawArc(RectF(-size, -size, size, size), deg * j, deg * sfj, true, paint)
         restore()
     }
     drawRect(RectF(-size, size - 2 * size * sf2, size, size), paint)
